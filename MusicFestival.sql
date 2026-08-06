@@ -241,6 +241,13 @@ SELECT * FROM StageSummary ORDER BY TotalFees DESC;
 
 /* Question 23
 
+SELECT DISTINCT P.PerformerName, P.Genre, S.StageName
+FROM Performer P
+JOIN ShowPerformer SP ON P.PerformerID = SP.PerformerID
+JOIN FestivalShow FS ON SP.ShowID = FS.ShowID
+JOIN Stage S ON FS.StageID = S.StageID
+WHERE S.StageName = 'River Stage';
+
 */
 
 /* Question 24
@@ -290,4 +297,56 @@ SELECT * FROM ShowLeftJoin;
 SELECT * FROM ShowLeftJoin ORDER BY StageName;
 SELECT * FROM ShowLeftJoin ORDER BY StageName, ShowID;
 */
+
+
+/* 
+Question 1 
+SELECT P.PerformerName, P.Genre, SP.showID
+FROM Performer P
+JOIN ShowPerformer SP ON P.PerformerID = SP.PerformerID
+WHERE ShowID = '1001';
+
+Question 2
+SELECT P.PerformerName, S.StageName, FS.ShowDate
+FROM Performer P
+JOIN ShowPerformer SP ON p.PerformerID = SP.PerformerID
+JOIN FestivalShow FS ON SP.ShowID = FS.ShowID
+JOIN Stage S ON FS.StageID = S.StageID
+ORDER BY FS.ShowDate, S.StageName, P.PerformerName;
+
+Question 3
+SELECT S.StageID, S.StageName, COUNT(FS.ShowID) AS NumShows
+FROM Stage S
+JOIN FestivalShow FS ON S.StageID = FS.StageID
+GROUP BY S.StageID, S.StageName
+HAVING COUNT(FS.ShowID) >= 1;
+
+Question 4
+SELECT S.StageName, S.StageID, FS.ShowID
+FROM Stage S
+LEFT JOIN FestivalShow FS ON S.StageID = FS.StageID
+ORDER BY S.StageName, FS.ShowID;
+
+Question 5 
+SELECT MAX(SP.Fee), MIN(SP.Fee), AVG(SP.Fee)
+FROM Performer P
+JOIN ShowPerformer SP ON P.PerformerID = SP.PerformerID;
+
+Question 6
+SELECT P.Genre, COUNT(P.PerformerID) AS NumPerformers, AVG(SP.Fee)
+FROM Performer P
+JOIN ShowPerformer SP ON P.PerformerID = SP.PerformerID
+GROUP BY P.Genre
+HAVING COUNT(P.PerformerID) >= 1
+ORDER BY NumPerformers DESC;
+
+Question 7
+SELECT P.Genre, AVG(SP.Fee) AS AvgFee
+FROM Performer P
+JOIN ShowPerformer SP ON P.PerformerID = SP.PerformerID
+GROUP BY P.Genre
+HAVING AVG(SP.Fee) > 1000
+ORDER BY AvgFee DESC;
+*/
+
 
