@@ -69,4 +69,148 @@ INSERT INTO ShowPerformer (ShowID, PerformerID, Fee) VALUES
 (1005, 103, 850.00),
 (1005, 102, 1050.00);
 
-SELECT 
+/*
+    SELECT [DISTINCT] columns
+    FROM tables
+    [WHERE condition]
+    [GROUP BY columns]
+    [HAVING group_condition]
+    [ORDER BY columns [ASC|DESC]];
+*/
+
+/* Question 1
+SELECT PerformerName, Country
+FROM Performer;
+*/
+
+/* Question 2
+SELECT *
+FROM FestivalShow
+WHERE ShowDate = '08-14-2026';
+*/ 
+
+/* Question 3
+SELECT PerformerName, Genre 
+FROM Performer
+WHERE Country = 'Canada';
+*/
+
+/* Question 4
+SELECT StageName
+FROM Stage
+WHERE Zone = 'North';
+*/
+
+/* Question 5
+SELECT PerformerName, Country
+FROM Performer
+WHERE Genre = 'Jazz';
+*/
+
+/* Question 6
+SELECT PerformerName, genre, country
+FROM Performer
+ORDER BY PerformerName ASC;
+*/
+
+/* Question 7
+SELECT DISTINCT Genre 
+FROM Performer
+ORDER BY Genre; //what does this do
+*/
+
+/* Question 8
+SELECT PerformerName, Genre
+FROM Performer
+WHERE PerformerName LIKE 'M%';
+*/
+
+/* Question 9
+SELECT ShowID, StageID, ShowDate, StartTime
+FROM FestivalShow
+ORDER BY ShowDate ASC, StartTime ASC;
+*/
+
+/* Question 10
+SELECT PerformerName, Genre, Country
+FROM Performer
+WHERE Genre LIKE '%ck%';
+*/
+
+/* Question 11
+SELECT FS.ShowID, fs.ShowDate, S.StageName
+FROM FestivalShow FS
+JOIN Stage S ON FS.StageID = S.StageID
+ORDER BY FS.ShowDate ASC;
+*/
+
+/* Question 12
+SELECT p.PerformerName, sp.ShowID, fs.ShowDate
+FROM Performer P
+JOIN ShowPerformer SP ON P.PerformerID = SP.PerformerID
+JOIN FestivalShow FS ON SP.ShowID = FS.ShowID
+ORDER BY P.PerformerID;
+*/
+
+/* Question 13
+SELECT FS.ShowID, FS.ShowDate, FS.StartTime, S.StageName, S.Zone
+FROM FestivalShow FS
+JOIN Stage S ON S.StageID = FS.StageID
+ORDER BY FS.ShowDate ASC;
+*/
+
+/* Question 14
+SELECT P.PerformerName, P.Genre, P.Country, S.StageName
+FROM Performer P
+JOIN ShowPerformer SP ON P.PerformerID = SP.PerformerID
+JOIN FestivalShow FS ON SP.ShowID = FS.ShowID
+JOIN Stage S ON FS.StageID = S.StageID
+WHERE S.StageName = 'River Stage';
+*/
+
+/* Question 15
+SELECT P.PerformerName, SUM(SP.Fee) AS TotalFees
+FROM Performer P
+JOIN ShowPerformer SP ON P.PerformerID = SP.PerformerID
+GROUP BY P.PerformerName
+ORDER BY TotalFees DESC;
+*/
+
+/* Question 16
+SELECT Genre, COUNT(*) AS NumPerformers
+FROM Performer
+GROUP BY Genre
+ORDER BY NumPerformers DESC;
+*/
+
+/* Question 17
+SELECT ShowDate, COUNT(*) AS NumShows
+FROM FestivalShow
+GROUP BY ShowDate
+ORDER BY ShowDate;
+*/
+
+/* Question 18
+
+*/
+
+/* Question 19
+
+*/
+
+/* Question 20
+
+*/
+
+/* Practice Questions from Document
+SELECT P.PerformerName, P.Genre, SP.ShowID
+FROM Performer P
+JOIN ShowPerformer SP ON P.PerformerID = SP.PerformerID
+WHERE SP.ShowID = '1001';
+
+SELECT P.PerformerName, SP.ShowID, S.StageName, FS.ShowDate
+FROM Performer P
+JOIN ShowPerformer SP ON P.PerformerID = SP.PerformerID
+JOIN FestivalShow FS ON SP.ShowID = FS.ShowID
+JOIN Stage S ON FS.StageID = S.StageID;
+*/
