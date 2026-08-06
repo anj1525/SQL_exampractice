@@ -69,15 +69,6 @@ INSERT INTO ShowPerformer (ShowID, PerformerID, Fee) VALUES
 (1005, 103, 850.00),
 (1005, 102, 1050.00);
 
-/*
-    SELECT [DISTINCT] columns
-    FROM tables
-    [WHERE condition]
-    [GROUP BY columns]
-    [HAVING group_condition]
-    [ORDER BY columns [ASC|DESC]];
-*/
-
 /* Question 1
 SELECT PerformerName, Country
 FROM Performer;
@@ -191,26 +182,112 @@ ORDER BY ShowDate;
 */
 
 /* Question 18
-
+SELECT AVG(fee) AS AverageFee
+FROM ShowPerformer;
 */
 
 /* Question 19
-
+SELECT S.StageName, COUNT(FS.ShowID) AS NumShows
+FROM Stage S
+JOIN FestivalShow FS ON S.StageID = FS.StageID
+GROUP BY S.StageName
+ORDER BY NumShows DESC;
 */
 
 /* Question 20
+SELECT FS.ShowID, FS.ShowDate,
+COUNT(SP.PerformerID) AS NumPerformers,
+COUNT(SP.Fee) AS NumFees
+FROM FestivalShow FS
+JOIN ShowPerformer SP ON FS.ShowID = SP.ShowID
+GROUP BY FS.ShowID, FS.ShowDate
+ORDER BY NumPerformers;
+*/
+
+/* Question 21
+SELECT Genre, COUNT(PerformerID) AS NumPerformers
+FROM Performer
+GROUP BY Genre
+HAVING COUNT(PerformerID) > 1
+ORDER BY NumPerformers;
+*/
+
+/* Question 22
+GO
+
+IF OBJECT_ID('StageSummary', 'V') IS NOT NULL
+    DROP VIEW StageSummary;
+
+GO
+
+CREATE VIEW StageSummary AS 
+SELECT S.StageName,
+COUNT(DISTINCT FS.ShowID) AS NumShows,
+COUNT(DISTINCT SP.PerformerID) AS NumPerformers,
+    SUM(SP.Fee) AS TotalFees
+FROM Stage S
+LEFT JOIN FestivalShow FS ON S.StageID = FS.StageID
+LEFT JOIN ShowPerformer SP ON FS.ShowID = SP.ShowID
+GROUP BY S.StageName;
+
+GO
+
+SELECT * FROM StageSummary;
+
+SELECT * FROM StageSummary WHERE NumShows > 0;
+
+SELECT * FROM StageSummary ORDER BY TotalFees DESC;
+*/
+
+/* Question 23
+
+*/
+
+/* Question 24
+
+*/
+
+/* Question 25
+
+*/
+
+/* Question 26
 
 */
 
 /* Practice Questions from Document
+QUESTION 1
 SELECT P.PerformerName, P.Genre, SP.ShowID
 FROM Performer P
 JOIN ShowPerformer SP ON P.PerformerID = SP.PerformerID
 WHERE SP.ShowID = '1001';
 
+QUESTION 2
 SELECT P.PerformerName, SP.ShowID, S.StageName, FS.ShowDate
 FROM Performer P
 JOIN ShowPerformer SP ON P.PerformerID = SP.PerformerID
 JOIN FestivalShow FS ON SP.ShowID = FS.ShowID
 JOIN Stage S ON FS.StageID = S.StageID;
+
+QUESTION 3
+SELECT   S.StageName, COUNT(FS.ShowID) AS NumShows
+FROM Stage S
+JOIN FestivalShow FS ON S.StageID = FS.StageID
+GROUP BY S.StageID, S.StageName
+ORDER BY NumShows DESC;
+
+QUESTION 4
+GO
+IF OBJECT_ID('ShowLeftJoin', 'V') IS NOT NULL
+    DROP VIEW ShowLeftJoin;
+GO 
+CREATE VIEW ShowLeftJoin AS
+SELECT S.StageName, FS.ShowID
+FROM Stage S
+LEFT JOIN FestivalShow FS ON S.StageID = FS.StageID;
+GO
+SELECT * FROM ShowLeftJoin;
+SELECT * FROM ShowLeftJoin ORDER BY StageName;
+SELECT * FROM ShowLeftJoin ORDER BY StageName, ShowID;
 */
+
